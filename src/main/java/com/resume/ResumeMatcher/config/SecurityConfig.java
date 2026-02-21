@@ -15,9 +15,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http){
 
-         return http
+                http
                    .csrf(csrf -> csrf.disable())
-                   .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                   .build();
+                   .authorizeHttpRequests(auth -> auth.requestMatchers("/customers/register", "/auth/login")
+                                          .permitAll()
+                                          .anyRequest()
+                                          .authenticated())
+                                          .addFilterBefore(jwtAuthFilter, UsernamePasswordAutheticationFilter.class);
+                  
+        
+           return http.build();
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration){
+            throws Exception{
+               return configuration.getAuthenticationManager();
+            }
 }
