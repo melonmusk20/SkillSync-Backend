@@ -22,16 +22,23 @@ public class ResumeController {
 
       return ResponseEntity.ok(resumeService.uploadResume(file));
     }
-
-    @PostMapping("/match")
-    public ResponseEntity<Integer> match(@RequestParam Long resumeId, @RequestParam String jobDescription){
+    
+  @PostMapping("/match")
+    public ResponseEntity<String> match(@RequestParam Long resumeId, @RequestParam String jobDescription){
 
         Resume resume = resumeService.getResumeById(resumeId);
 
-        int score = resumeService.calculateMatchScore(resume.getExtractedText(), jobDescription);
-
+        String score = resumeService.matchScore(resumeId, jobDescription);
         return ResponseEntity.ok(score);
+    }
+    
+    @PostMapping("/{id}/optimize")
+    public ResponseEntity<String> optimizeResume(
+            @PathVariable Long id,
+            @RequestBody String jobDescription
+    ){
+        String optimizedResume = resumeService.optimizeResume(id, jobDescription);
 
-
+        return ResponseEntity.ok(optimizedResume);
     }
 }
