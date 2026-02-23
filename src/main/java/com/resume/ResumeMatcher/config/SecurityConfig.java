@@ -21,7 +21,7 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
+    
      private PasswordEncoder passwordEncoder;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter,
