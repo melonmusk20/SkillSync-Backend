@@ -15,13 +15,15 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-      config.setAllowedOrigins(List.of(
-                             "http://localhost:5173",
-                        "https://skillsync-app-coral.vercel.app",
-                    "https://skillsync-j5zswvbuj-melonmusk20s-projects.vercel.app"
-));;
+
+        config.setAllowedOriginPatterns(List.of(
+            "http://localhost:5173",
+            "https://skillsync-app-coral.vercel.app",
+            "https://*.vercel.app"  
+        ));
+
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
